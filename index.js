@@ -131,7 +131,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0.000001 TT1FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			to: sConAddr,
 			suggestedParams,
 		})
 
@@ -144,7 +144,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0 TT2FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			to: sConAddr,
 			suggestedParams,
 		})
 
@@ -157,7 +157,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0 TT3FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			to: sConAddr,
 			suggestedParams,
 		})
 
@@ -170,7 +170,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0 TT4FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			to: sConAddr,
 			suggestedParams,
 		})
 
@@ -183,7 +183,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0 TT5FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			to: sConAddr,
 			suggestedParams,
 		})
 
@@ -193,7 +193,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 		from: user.addr,
 		note: enc.encode('Transfer of 0 ALGO'),
 		rekeyTo: undefined,
-		to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+		to: sConAddr,
 		suggestedParams,
 	})
 
