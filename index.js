@@ -204,7 +204,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 		],
 		boxes: [{ appIndex: sContract, name: enc.encode([0, user.addr]) }],
 		from: user.addr,
-		foreignAssets: [parseInt(process.env.TRUST_ID), TT1, TT2, TT3, TT4, TT5],
+		foreignAssets: [TT1, TT2, TT3, TT4, TT5],
 		note: enc.encode('Staking contract stake call'),
 		suggestedParams,
 	})
