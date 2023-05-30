@@ -1,0 +1,21 @@
+{
+    "sigs": [
+        "ContractViews_accepted(address)uint64",
+        "ContractViews_bountyValue(address)uint64",
+        "ContractViews_matchmakerBonusLevel(address)uint64",
+        "ContractViews_rejected(address)uint64",
+        "ContractViews_userPledgedTokens(address)uint64",
+        "ContractViews_userSwipeCost(address)uint64",
+        "ContractViews_userSwipes(address)uint64",
+        "Matchmaker_evaluate((address,(address,byte),(address,byte)))byte",
+        "Owner_claimFees()uint64",
+        "Owner_onlyOwner()byte",
+        "Owner_updateSwipeCost(uint64)uint64",
+        "User_pledge(uint64)uint64",
+        "User_swipe(address)byte",
+        "User_unpledge(uint64)uint64",
+        "_reachp_0((uint64,uint64,uint64,uint64,address))void",
+        "_reachp_1((uint64))void",
+        "_reachp_3((uint64,(byte,byte[98])))void"
+    ]
+}

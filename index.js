@@ -115,6 +115,9 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 // 	console.log(e)
 // })
 ;(async () => {
+	// Note ABIs for the staking contract can be found in './ABIs/stakingContract.json'
+	// The desired functionality to be called in this block is the User_stake API function
+	// It takes in payment of 0 Algo and 5 different ASAs and performs and some internal tasks
 	console.log(`[+] Retrieving suggested transaction params`)
 	const suggestedParams = await algodClient.getTransactionParams().do()
 
@@ -205,7 +208,7 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 		boxes: [{ appIndex: sContract, name: enc.encode([0, user.addr]) }],
 		from: user.addr,
 		foreignAssets: [TT1, TT2, TT3, TT4, TT5],
-		note: enc.encode('Staking contract stake call'),
+		note: enc.encode('Staking contract stake call of 1 TT1 token'),
 		suggestedParams,
 	})
 

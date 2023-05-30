@@ -1,0 +1,13 @@
+{
+    "sigs": [
+        "ContractViews_amount()uint64",
+        "ContractViews_recipient()address",
+        "ContractViews_token()uint64",
+        "Recipient_decide(byte)byte",
+        "_reachp_0((uint64,uint64,address,uint64))void",
+        "_reachp_1((uint64))void",
+        "_reachp_3((uint64,(byte)))void",
+        "_reachp_4((uint64))void",
+        "_reachp_5((uint64))void"
+    ]
+}

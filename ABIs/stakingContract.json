@@ -1,0 +1,11 @@
+{
+    "sigs": [
+        "ContractViews_stakedTokens(address)(uint64,uint64,uint64,uint64,uint64)",
+        "ContractViews_userTier(address)uint64",
+        "User_reclaim(uint64)uint64",
+        "User_stake(uint64)uint64",
+        "_reachp_0((uint64,uint64,uint64,uint64,uint64,uint64))void",
+        "_reachp_1((uint64))void",
+        "_reachp_3((uint64,(byte,byte[8])))void"
+    ]
+}
