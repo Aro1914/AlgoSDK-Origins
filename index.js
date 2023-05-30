@@ -128,15 +128,80 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 			note: enc.encode('Transfer of 0.000001 TT1FT'),
 			rekeyTo: undefined,
 			revocationTarget: undefined,
-			to: sConAddr,
+			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
 			suggestedParams,
 		})
+
+	const user_aXferTxn2 =
+		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+			amount: 0,
+			assetIndex: TT2,
+			closeRemainderTo: undefined,
+			from: user.addr,
+			note: enc.encode('Transfer of 0 TT2FT'),
+			rekeyTo: undefined,
+			revocationTarget: undefined,
+			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			suggestedParams,
+		})
+
+	const user_aXferTxn3 =
+		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+			amount: 0,
+			assetIndex: TT3,
+			closeRemainderTo: undefined,
+			from: user.addr,
+			note: enc.encode('Transfer of 0 TT3FT'),
+			rekeyTo: undefined,
+			revocationTarget: undefined,
+			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			suggestedParams,
+		})
+
+	const user_aXferTxn4 =
+		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+			amount: 0,
+			assetIndex: TT4,
+			closeRemainderTo: undefined,
+			from: user.addr,
+			note: enc.encode('Transfer of 0 TT4FT'),
+			rekeyTo: undefined,
+			revocationTarget: undefined,
+			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			suggestedParams,
+		})
+
+	const user_aXferTxn5 =
+		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+			amount: 0,
+			assetIndex: TT5,
+			closeRemainderTo: undefined,
+			from: user.addr,
+			note: enc.encode('Transfer of 0 TT5FT'),
+			rekeyTo: undefined,
+			revocationTarget: undefined,
+			to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+			suggestedParams,
+		})
+
+	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+		amount: 0,
+		closeRemainderTo: undefined,
+		from: user.addr,
+		note: enc.encode('Transfer of 0 ALGO'),
+		rekeyTo: undefined,
+		to: 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM',
+		suggestedParams,
+	})
 
 	console.log(`[+] Creating User Stake transaction to the Staking contract`)
 	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
 		appIndex: sContract,
 		accounts: [user.addr],
-		appArgs: [enc.encode('User_stake'), algosdk.encodeUint64(1)],
+		appArgs: [
+			new Uint8Array(Buffer.from('User_stake')),
+			algosdk.encodeUint64(1),
+		],
 		boxes: [{ appIndex: sContract, name: enc.encode([0, user.addr]) }],
 		from: user.addr,
 		foreignAssets: [parseInt(process.env.TRUST_ID), TT1, TT2, TT3, TT4, TT5],
@@ -145,14 +210,35 @@ const sConAddr = 'ZWIHHJE6L7XJNRQW6UY4LS4QTK2TJOGPEQNELY5AFSRPBMZKICXSAEXBLM'
 	})
 
 	console.log(`[+] Grouping the transactions`)
-	const txnArray = [user_aXferTxn, user_NoOptTxn]
+	const txnArray = [
+		user_aXferTxn,
+		user_aXferTxn2,
+		user_aXferTxn3,
+		user_aXferTxn4,
+		user_aXferTxn5,
+		user_aXferTxn6,
+		user_NoOptTxn,
+	]
 	const txnGroup = algosdk.assignGroupID(txnArray)
 
 	console.log(`[+] Signing transactions`)
 	const userSignedTxn1 = txnGroup[0].signTxn(user.sk)
 	const userSignedTxn2 = txnGroup[1].signTxn(user.sk)
+	const userSignedTxn3 = txnGroup[2].signTxn(user.sk)
+	const userSignedTxn4 = txnGroup[3].signTxn(user.sk)
+	const userSignedTxn5 = txnGroup[4].signTxn(user.sk)
+	const userSignedTxn6 = txnGroup[5].signTxn(user.sk)
+	const userSignedTxn7 = txnGroup[6].signTxn(user.sk)
 
-	const signedTxns = [userSignedTxn1, userSignedTxn2]
+	const signedTxns = [
+		userSignedTxn1,
+		userSignedTxn2,
+		userSignedTxn3,
+		userSignedTxn4,
+		userSignedTxn5,
+		userSignedTxn6,
+		userSignedTxn7,
+	]
 
 	console.log(`[+] Publishing signed transactions`)
 	await algodClient.sendRawTransaction(signedTxns).do()
