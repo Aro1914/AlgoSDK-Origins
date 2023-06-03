@@ -35,7 +35,7 @@ const b64 = (byte) =>
 	Buffer.from(new Uint8Array(Buffer.from(byte))).toString('base64')
 const uint8 = (byte) =>
 	new Uint8Array(
-		Buffer.from(new Uint8Array(Buffer.from(byte))).toString('base64')
+		b64(byte)
 	)
 // ;(async () => {
 // 	const asset = parseInt(process.env.TRUST_ID)
