@@ -33,7 +33,7 @@ const mConAddr = 'EUGG65MUYEB54V25ALHEJMLWNUALNHCRHDPQMATSPLY5VIUYXJRXEWA5WI'
 
 const b64 = (byte) =>
 	Buffer.from(new Uint8Array(Buffer.from(byte))).toString('base64')
-const uint8 = (byte) =>
+const uint8_b64 = (byte) =>
 	new Uint8Array(
 		b64(byte)
 	)
