@@ -33,10 +33,7 @@ const mConAddr = 'EUGG65MUYEB54V25ALHEJMLWNUALNHCRHDPQMATSPLY5VIUYXJRXEWA5WI'
 
 const b64 = (byte) =>
 	Buffer.from(new Uint8Array(Buffer.from(byte))).toString('base64')
-const uint8_b64 = (byte) =>
-	new Uint8Array(
-		b64(byte)
-	)
+const uint8_b64 = (byte) => new Uint8Array(b64(byte))
 // ;(async () => {
 // 	const asset = parseInt(process.env.TRUST_ID)
 // 	const assetInfo = await algodClient.getAssetByID(asset).do()
@@ -242,70 +239,70 @@ const uint8_b64 = (byte) =>
 // })().catch((e) => {
 // 	console.log(e)
 // })
-;(async () => {
-	// Note ABIs for the staking contract can be found in './ABIs/stakingContract.json'
-	// The desired functionality to be called in this block is the User_stake API function
-	// It takes in payment of 0 Algo and 5 different ASAs and performs and some internal tasks
-	console.log(`[+] Retrieving suggested transaction params`)
-	const suggestedParams = await algodClient.getTransactionParams().do()
+// ;(async () => {
+// 	// Note ABIs for the staking contract can be found in './ABIs/stakingContract.json'
+// 	// The desired functionality to be called in this block is the User_stake API function
+// 	// It takes in payment of 0 Algo and 5 different ASAs and performs and some internal tasks
+// 	console.log(`[+] Retrieving suggested transaction params`)
+// 	const suggestedParams = await algodClient.getTransactionParams().do()
 
-	const amount = 20 * 10 ** 3
-	console.log(`[+] Creating User asset transfer transaction`)
-	const user_aXferTxn =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount,
-			assetIndex: TRUST,
-			from: user.addr,
-			note: enc.encode('Transfer of 20 TRUST'),
-			to: mConAddr,
-			suggestedParams,
-		})
+// 	const amount = 20 * 10 ** 3
+// 	console.log(`[+] Creating User asset transfer transaction`)
+// 	const user_aXferTxn =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount,
+// 			assetIndex: TRUST,
+// 			from: user.addr,
+// 			note: enc.encode('Transfer of 20 TRUST'),
+// 			to: mConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-		amount: 0,
-		from: user.addr,
-		note: enc.encode('Transfer of 0 ALGO'),
-		to: mConAddr,
-		suggestedParams,
-	})
+// 	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+// 		amount: 0,
+// 		from: user.addr,
+// 		note: enc.encode('Transfer of 0 ALGO'),
+// 		to: mConAddr,
+// 		suggestedParams,
+// 	})
 
-	console.log(`[+] Creating User Pledge transaction to the Main contract`)
-	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
-		appIndex: mContract,
-		accounts: [user.addr],
-		appArgs: [enc.encode('User_pledge'), algosdk.encodeUint64(amount)],
-		boxes: [
-			{ appIndex: mContract, name: enc.encode([0, user.addr]) },
-			{ appIndex: mContract, name: enc.encode([1, user.addr]) },
-		],
-		from: user.addr,
-		foreignAssets: [TRUST],
-		note: enc.encode('Main contract pledge call of 20 TRUST'),
-		suggestedParams,
-	})
+// 	console.log(`[+] Creating User Pledge transaction to the Main contract`)
+// 	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
+// 		appIndex: mContract,
+// 		accounts: [user.addr],
+// 		appArgs: [enc.encode('User_pledge'), algosdk.encodeUint64(amount)],
+// 		boxes: [
+// 			{ appIndex: mContract, name: enc.encode([0, user.addr]) },
+// 			{ appIndex: mContract, name: enc.encode([1, user.addr]) },
+// 		],
+// 		from: user.addr,
+// 		foreignAssets: [TRUST],
+// 		note: enc.encode('Main contract pledge call of 20 TRUST'),
+// 		suggestedParams,
+// 	})
 
-	console.log(`[+] Grouping the transactions`)
-	const txnArray = [user_aXferTxn, user_aXferTxn6, user_NoOptTxn]
-	const txnGroup = algosdk.assignGroupID(txnArray)
+// 	console.log(`[+] Grouping the transactions`)
+// 	const txnArray = [user_aXferTxn, user_aXferTxn6, user_NoOptTxn]
+// 	const txnGroup = algosdk.assignGroupID(txnArray)
 
-	console.log(`[+] Signing transactions`)
-	const userSignedTxn1 = txnGroup[0].signTxn(user.sk)
-	const userSignedTxn2 = txnGroup[1].signTxn(user.sk)
-	const userSignedTxn3 = txnGroup[2].signTxn(user.sk)
+// 	console.log(`[+] Signing transactions`)
+// 	const userSignedTxn1 = txnGroup[0].signTxn(user.sk)
+// 	const userSignedTxn2 = txnGroup[1].signTxn(user.sk)
+// 	const userSignedTxn3 = txnGroup[2].signTxn(user.sk)
 
-	const signedTxns = [userSignedTxn1, userSignedTxn2, userSignedTxn3]
+// 	const signedTxns = [userSignedTxn1, userSignedTxn2, userSignedTxn3]
 
-	console.log(`[+] Publishing signed transactions`)
-	await algodClient.sendRawTransaction(signedTxns).do()
-	await algosdk.waitForConfirmation(
-		algodClient,
-		user_aXferTxn.txID().toString(),
-		3
-	)
-	console.log(`[+] The transaction should be signed by now`)
-})().catch((e) => {
-	console.log(e)
-})
+// 	console.log(`[+] Publishing signed transactions`)
+// 	await algodClient.sendRawTransaction(signedTxns).do()
+// 	await algosdk.waitForConfirmation(
+// 		algodClient,
+// 		user_aXferTxn.txID().toString(),
+// 		3
+// 	)
+// 	console.log(`[+] The transaction should be signed by now`)
+// })().catch((e) => {
+// 	console.log(e)
+// })
 // ;(async () => {
 // 	const accountInfo = await algodClient.accountInformation(user.addr).do()
 // 	const appInfo = await algodClient.getApplicationByID(sContract).do()
@@ -321,13 +318,81 @@ const uint8_b64 = (byte) =>
 // const string = new TextDecoder().decode(uint8Array)
 // console.log(uint8Array, string)
 
-// const x = new Uint8Array(33)
-// ;;[
-// 	0, 64, 85, 71, 245, 56, 40, 200, 13, 5, 73, 1, 182, 97, 137, 91, 248, 176,
-// 	178, 214, 110, 236, 219, 144, 81, 83, 227, 211, 141, 233, 243, 9, 61,
-// ].forEach((element, i) => {
-// 	x[i] = element
-// })
+function Utf8ArrayToStr(array) {
+	var out, i, len, c
+	var char2, char3
 
-// const y = new TextDecoder('utf-8').decode(x)
-// console.log(y)
+	out = ''
+	len = array.length
+	i = 0
+	while (i < len) {
+		c = array[i++]
+		switch (c >> 4) {
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+				// 0xxxxxxx
+				out += String.fromCharCode(c)
+				break
+			case 12:
+			case 13:
+				// 110x xxxx   10xx xxxx
+				char2 = array[i++]
+				out += String.fromCharCode(((c & 0x1f) << 6) | (char2 & 0x3f))
+				break
+			case 14:
+				// 1110 xxxx  10xx xxxx  10xx xxxx
+				char2 = array[i++]
+				char3 = array[i++]
+				out += String.fromCharCode(
+					((c & 0x0f) << 12) | ((char2 & 0x3f) << 6) | ((char3 & 0x3f) << 0)
+				)
+				break
+		}
+	}
+
+	return out
+}
+
+const uint8Obj = {
+	0: 0,
+	1: 0,
+	2: 0,
+	3: 0,
+	4: 0,
+	5: 0,
+	6: 0,
+	7: 0,
+	8: 1,
+	9: 0,
+	10: 0,
+	11: 0,
+	12: 0,
+	13: 0,
+	14: 0,
+	15: 0,
+	16: 1,
+}
+const uint8Arr = []
+
+const uint8Keys = Object.keys(uint8Obj)
+const uint8KeyLen = uint8Keys.length
+let i = 0
+for (i; i < uint8KeyLen; i++) {
+	uint8Arr.push(uint8Obj[uint8Keys[i]])
+}
+
+const x = new Uint8Array(uint8KeyLen)
+
+uint8Arr.forEach((element, i) => {
+	x[i] = element
+})
+
+const y = new TextDecoder('utf-8').decode(x.subarray(0, uint8KeyLen))
+console.log(y)
+console.log(Utf8ArrayToStr(x))
