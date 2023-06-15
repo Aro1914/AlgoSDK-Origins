@@ -197,32 +197,6 @@ const makeSignatureChecker = function (sig_) {
 // 	console.log(e)
 // })
 
-// Attempt at Application Opt-in
-// ;(async () => {
-// 	console.log(`[+] Retrieving suggested transaction params`)
-// 	const suggestedParams = await algodClient.getTransactionParams().do()
-
-// 	console.log(`[+] Creating User Opt-in transaction to the Staking contract`)
-// 	const user_OptInTxn = algosdk.makeApplicationOptInTxnFromObject({
-// 		appIndex: sContract,
-// 		from: user.addr,
-// 		note: enc.encode('Staking contract Opt-in call'),
-// 		suggestedParams,
-// 	})
-// 	console.log(`[+] Signing transaction`)
-// 	const signedTxn = user_OptInTxn.signTxn(user.sk)
-// 	console.log(`[+] Publishing signed transactions`)
-// 	await algodClient.sendRawTransaction(signedTxn).do()
-// 	await algosdk.waitForConfirmation(
-// 		algodClient,
-// 		user_OptInTxn.txID().toString(),
-// 		3
-// 	)
-// 	console.log(`[+] The transaction should be signed by now`)
-// })().catch((e) => {
-// 	console.log(e)
-// })
-
 // Account info retrieval
 // ;(async () => {
 // 	const accountInfo = await algodClient.accountInformation(user.addr).do()
@@ -232,262 +206,282 @@ const makeSignatureChecker = function (sig_) {
 // })
 
 // Staking
-;(async () => {
-	// Note ABIs for the staking contract can be found in './ABIs/stakingContract.json'
-	// The desired functionality to be called in this block is the User_stake API function
-	// It takes in payment of 0 Algo and 5 different ASAs and performs and some internal tasks
-	console.log(`[+] Retrieving suggested transaction params`)
-	const suggestedParams = await algodClient.getTransactionParams().do()
+// ;(async () => {
+// 	// Note ABIs for the staking contract can be found in './ABIs/stakingContract.json'
+// 	// The desired functionality to be called in this block is the User_stake API function
+// 	// It takes in payment of 0 Algo and 5 different ASAs and performs and some internal tasks
+// 	console.log(`[+] Retrieving suggested transaction params`)
+// 	const suggestedParams = await algodClient.getTransactionParams().do()
 
-	const argName = makeSignatureChecker('User_stake(uint64)uint64').ui8
+// 	const argName = makeSignatureChecker('User_stake(uint64)uint64').ui8
 
-	console.log(`[+] Creating User asset transfer transaction`)
-	const user_aXferTxn =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount: 1,
-			assetIndex: TT1,
-			from: admin.addr,
-			note: enc.encode('Transfer of 0.000001 TT1FT'),
-			to: sConAddr,
-			suggestedParams,
-		})
+// 	console.log(`[+] Creating User asset transfer transaction`)
+// 	const user_aXferTxn =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount: 1,
+// 			assetIndex: TT1,
+// 			from: admin.addr,
+// 			note: enc.encode('Transfer of 0.000001 TT1FT'),
+// 			to: sConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn2 =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount: 0,
-			assetIndex: TT2,
-			from: admin.addr,
-			note: enc.encode('Transfer of 0 TT2FT'),
-			to: sConAddr,
-			suggestedParams: {
-				...suggestedParams,
-				fee: 4000,
-			},
-		})
+// 	const user_aXferTxn2 =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount: 0,
+// 			assetIndex: TT2,
+// 			from: admin.addr,
+// 			note: enc.encode('Transfer of 0 TT2FT'),
+// 			to: sConAddr,
+// 			suggestedParams: {
+// 				...suggestedParams,
+// 				fee: 4000,
+// 			},
+// 		})
 
-	const user_aXferTxn3 =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount: 0,
-			assetIndex: TT3,
-			from: admin.addr,
-			note: enc.encode('Transfer of 0 TT3FT'),
-			to: sConAddr,
-			suggestedParams,
-		})
+// 	const user_aXferTxn3 =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount: 0,
+// 			assetIndex: TT3,
+// 			from: admin.addr,
+// 			note: enc.encode('Transfer of 0 TT3FT'),
+// 			to: sConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn4 =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount: 0,
-			assetIndex: TT4,
-			from: admin.addr,
-			note: enc.encode('Transfer of 0 TT4FT'),
-			to: sConAddr,
-			suggestedParams,
-		})
+// 	const user_aXferTxn4 =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount: 0,
+// 			assetIndex: TT4,
+// 			from: admin.addr,
+// 			note: enc.encode('Transfer of 0 TT4FT'),
+// 			to: sConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn5 =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount: 0,
-			assetIndex: TT5,
-			from: admin.addr,
-			note: enc.encode('Transfer of 0 TT5FT'),
-			to: sConAddr,
-			suggestedParams,
-		})
+// 	const user_aXferTxn5 =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount: 0,
+// 			assetIndex: TT5,
+// 			from: admin.addr,
+// 			note: enc.encode('Transfer of 0 TT5FT'),
+// 			to: sConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-		amount: 0,
-		from: admin.addr,
-		note: enc.encode('Transfer of 0 ALGO'),
-		to: sConAddr,
-		suggestedParams,
-	})
+// 	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+// 		amount: 0,
+// 		from: admin.addr,
+// 		note: enc.encode('Transfer of 0 ALGO'),
+// 		to: sConAddr,
+// 		suggestedParams,
+// 	})
 
-	console.log(`[+] Creating User Stake transaction to the Staking contract`)
+// 	console.log(`[+] Creating User Stake transaction to the Staking contract`)
 
-	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
-		appIndex: sContract,
-		accounts: [admin.addr],
-		appArgs: [argName, algosdk.encodeUint64(1)],
-		boxes: [
-			{
-				appIndex: sContract,
-				name: buf_to_arr(
-					hex_to_buf(
-						'0x00'.concat(Buffer.from(algosdk.decodeAddress(admin.addr).publicKey).toString(
-							'hex'
-						))
-					)
-				),
-			},
-		],
-		from: admin.addr,
-		foreignAssets: [TT1, TT2, TT3, TT4, TT5],
-		foreignApps: [218570200],
-		note: enc.encode('Staking contract stake call of 1 TT1 token'),
-		suggestedParams,
-		fee: 5000,
-	})
+// 	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
+// 		appIndex: sContract,
+// 		accounts: [admin.addr],
+// 		appArgs: [argName, algosdk.encodeUint64(1)],
+// 		boxes: [
+// 			{
+// 				appIndex: sContract,
+// 				name: buf_to_arr(
+// 					hex_to_buf(
+// 						'0x00'.concat(
+// 							Buffer.from(algosdk.decodeAddress(admin.addr).publicKey).toString(
+// 								'hex'
+// 							)
+// 						)
+// 					)
+// 				),
+// 			},
+// 		],
+// 		from: admin.addr,
+// 		foreignAssets: [TT1, TT2, TT3, TT4, TT5],
+// 		foreignApps: [218570200],
+// 		note: enc.encode('Staking contract stake call of 1 TT1 token'),
+// 		suggestedParams,
+// 		fee: 5000,
+// 	})
 
-	console.log(`[+] Grouping the transactions`)
-	const txnArray = [
-		user_aXferTxn,
-		user_aXferTxn2,
-		user_aXferTxn3,
-		user_aXferTxn4,
-		user_aXferTxn5,
-		user_aXferTxn6,
-		user_NoOptTxn,
-	]
-	const txnGroup = algosdk.assignGroupID(txnArray)
+// 	console.log(`[+] Grouping the transactions`)
+// 	const txnArray = [
+// 		user_aXferTxn,
+// 		user_aXferTxn2,
+// 		user_aXferTxn3,
+// 		user_aXferTxn4,
+// 		user_aXferTxn5,
+// 		user_aXferTxn6,
+// 		user_NoOptTxn,
+// 	]
+// 	const txnGroup = algosdk.assignGroupID(txnArray)
 
-	console.log(`[+] Signing transactions`)
-	const userSignedTxn1 = txnGroup[0].signTxn(admin.sk)
-	const userSignedTxn2 = txnGroup[1].signTxn(admin.sk)
-	const userSignedTxn3 = txnGroup[2].signTxn(admin.sk)
-	const userSignedTxn4 = txnGroup[3].signTxn(admin.sk)
-	const userSignedTxn5 = txnGroup[4].signTxn(admin.sk)
-	const userSignedTxn6 = txnGroup[5].signTxn(admin.sk)
-	const userSignedTxn7 = txnGroup[6].signTxn(admin.sk)
+// 	console.log(`[+] Signing transactions`)
+// 	const userSignedTxn1 = txnGroup[0].signTxn(admin.sk)
+// 	const userSignedTxn2 = txnGroup[1].signTxn(admin.sk)
+// 	const userSignedTxn3 = txnGroup[2].signTxn(admin.sk)
+// 	const userSignedTxn4 = txnGroup[3].signTxn(admin.sk)
+// 	const userSignedTxn5 = txnGroup[4].signTxn(admin.sk)
+// 	const userSignedTxn6 = txnGroup[5].signTxn(admin.sk)
+// 	const userSignedTxn7 = txnGroup[6].signTxn(admin.sk)
 
-	const signedTxns = [
-		userSignedTxn1,
-		userSignedTxn2,
-		userSignedTxn3,
-		userSignedTxn4,
-		userSignedTxn5,
-		userSignedTxn6,
-		userSignedTxn7,
-	]
+// 	const signedTxns = [
+// 		userSignedTxn1,
+// 		userSignedTxn2,
+// 		userSignedTxn3,
+// 		userSignedTxn4,
+// 		userSignedTxn5,
+// 		userSignedTxn6,
+// 		userSignedTxn7,
+// 	]
 
-	console.log(`[+] Publishing signed transactions`)
-	await algodClient.sendRawTransaction(signedTxns).do()
-	await algosdk.waitForConfirmation(
-		algodClient,
-		user_aXferTxn.txID().toString(),
-		3
-	)
-	console.log(`[+] The transaction should be signed by now`)
-})().catch((e) => {
-	console.log(e)
-})
+// 	console.log(`[+] Publishing signed transactions`)
+// 	await algodClient.sendRawTransaction(signedTxns).do()
+// 	await algosdk.waitForConfirmation(
+// 		algodClient,
+// 		user_aXferTxn.txID().toString(),
+// 		3
+// 	)
+// 	console.log(`[+] The transaction should be signed by now`)
+// })().catch((e) => {
+// 	console.log(e)
+// })
 
 // Pledging
-;(async () => {
-	// Note ABIs for the main contract can be found in './ABIs/mainContract.json'
-	// The desired functionality to be called in this block is the User_pledge API function
-	// It takes in payment of 20 Trust and 0 Algo and performs and some internal tasks
-	console.log(`[+] Retrieving suggested transaction params`)
-	const suggestedParams = await algodClient.getTransactionParams().do()
+// ;(async () => {
+// 	// Note ABIs for the main contract can be found in './ABIs/mainContract.json'
+// 	// The desired functionality to be called in this block is the User_pledge API function
+// 	// It takes in payment of 20 Trust and 0 Algo and performs and some internal tasks
+// 	console.log(`[+] Retrieving suggested transaction params`)
+// 	const suggestedParams = await algodClient.getTransactionParams().do()
 
-	const amount = 20 * 10 ** 3
-	console.log(amount)
-	console.log(`[+] Creating User asset transfer transaction`)
-	const user_aXferTxn =
-		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-			amount,
-			assetIndex: TRUST,
-			from: user.addr,
-			note: enc.encode('Transfer of 20 TRUST'),
-			to: mConAddr,
-			suggestedParams,
-		})
+// 	const amount = 20 * 10 ** 3
+// 	console.log(amount)
+// 	console.log(`[+] Creating User asset transfer transaction`)
+// 	const user_aXferTxn =
+// 		algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+// 			amount,
+// 			assetIndex: TRUST,
+// 			from: user.addr,
+// 			note: enc.encode('Transfer of 20 TRUST'),
+// 			to: mConAddr,
+// 			suggestedParams,
+// 		})
 
-	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-		amount: 0,
-		from: user.addr,
-		note: enc.encode('Transfer of 0 ALGO'),
-		to: mConAddr,
-		suggestedParams,
-	})
+// 	const user_aXferTxn6 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+// 		amount: 0,
+// 		from: user.addr,
+// 		note: enc.encode('Transfer of 0 ALGO'),
+// 		to: mConAddr,
+// 		suggestedParams,
+// 	})
 
-	const argName = makeSignatureChecker('User_pledge(uint64)uint64').ui8
-	const argName_ = makeSignatureChecker(
-		'_reachp_0((uint64,uint64,uint64,uint64,address))void'
-	).ui8
+// 	const argName = makeSignatureChecker('User_pledge(uint64)uint64').ui8
+// 	// const argName_ = makeSignatureChecker(
+// 	// 	'_reachp_0((uint64,uint64,uint64,uint64,address))void'
+// 	// ).ui8
 
-	console.log(`[+] Creating User Pledge transaction to the Main contract`)
-	console.log(`[-] Constructed arg:`, argName)
+// 	console.log(`[+] Creating User Pledge transaction to the Main contract`)
+// 	console.log(`[-] Constructed arg:`, argName)
 
-	// const user_OptInTxn = algosdk.makeApplicationOptInTxnFromObject({
-	// 	appIndex: mContract,
-	// 	accounts: [user.addr],
-	// 	appArgs: [
-	// 		argName_,
-	// 		algosdk.encodeUint64(mContract),
-	// 		algosdk.encodeUint64(sContract),
-	// 		algosdk.encodeUint64(TRUST),
-	// 		algosdk.encodeUint64(1000),
-	// 		enc.encode(algosdk.encodeAddress(admin.addr)),
-	// 	],
-	// 	boxes: [
-	// 		{ appIndex: mContract, name: enc.encode([0, (user.addr)]) },
-	// 		{ appIndex: mContract, name: enc.encode([1, (user.addr)]) },
-	// 	],
-	// 	from: user.addr,
-	// 	foreignAssets: [TRUST],
-	// 	foreignApps: [sContract],
-	// 	note: enc.encode('Main contract OptIn call'),
-	// 	suggestedParams,
-	// })
+// 	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
+// 		appIndex: mContract,
+// 		accounts: [user.addr],
+// 		appArgs: [argName, algosdk.encodeUint64(amount)],
+// 		boxes: [
+// 			{
+// 				appIndex: mContract,
+// 				name: buf_to_arr(
+// 					hex_to_buf(
+// 						'0x00'.concat(
+// 							Buffer.from(algosdk.decodeAddress(user.addr).publicKey).toString(
+// 								'hex'
+// 							)
+// 						)
+// 					)
+// 				),
+// 			},
+// 			{
+// 				appIndex: mContract,
+// 				name: buf_to_arr(
+// 					hex_to_buf(
+// 						'0x00'.concat(
+// 							Buffer.from(algosdk.decodeAddress(user.addr).publicKey).toString(
+// 								'hex'
+// 							)
+// 						)
+// 					)
+// 				),
+// 			},
+// 		],
+// 		from: user.addr,
+// 		foreignAssets: [TRUST],
+// 		foreignApps: [sContract],
+// 		note: enc.encode('Main contract pledge call of 20 TRUST'),
+// 		suggestedParams,
+// 	})
 
-	const user_NoOptTxn = algosdk.makeApplicationNoOpTxnFromObject({
-		appIndex: mContract,
-		accounts: [user.addr],
-		appArgs: [argName, algosdk.encodeUint64(amount)],
-		boxes: [
-			{ appIndex: mContract, name: buf_to_arr(
-					hex_to_buf(
-						'0x00'.concat(Buffer.from(algosdk.decodeAddress(user.addr).publicKey).toString(
-							'hex'
-						))
-					)
-				) },
-			{ appIndex: mContract, name: buf_to_arr(
-					hex_to_buf(
-						'0x00'.concat(Buffer.from(algosdk.decodeAddress(user.addr).publicKey).toString(
-							'hex'
-						))
-					)
-				) },
-		],
-		from: user.addr,
-		foreignAssets: [TRUST],
-		foreignApps: [sContract],
-		note: enc.encode('Main contract pledge call of 20 TRUST'),
-		suggestedParams,
-	})
+// 	console.log(`[+] Grouping the transactions`)
+// 	const txnArray = [user_aXferTxn, user_aXferTxn6, user_NoOptTxn]
+// 	const txnGroup = algosdk.assignGroupID(txnArray)
 
-	console.log(`[+] Grouping the transactions`)
-	const txnArray = [user_aXferTxn, user_aXferTxn6,
-		// user_OptInTxn,
-		user_NoOptTxn]
-	const txnGroup = algosdk.assignGroupID(txnArray)
+// 	console.log(`[+] Signing transactions`)
+// 	const userSignedTxn1 = txnGroup[0].signTxn(user.sk)
+// 	const userSignedTxn2 = txnGroup[1].signTxn(user.sk)
+// 	const userSignedTxn3 = txnGroup[2].signTxn(user.sk)
 
-	console.log(`[+] Signing transactions`)
-	const userSignedTxn1 = txnGroup[0].signTxn(user.sk)
-	const userSignedTxn2 = txnGroup[1].signTxn(user.sk)
-	const userSignedTxn3 = txnGroup[2].signTxn(user.sk)
-	// const userSignedTxn4 = txnGroup[3].signTxn(user.sk)
+// 	const signedTxns = [userSignedTxn1, userSignedTxn2, userSignedTxn3]
 
-	const signedTxns = [
-		userSignedTxn1,
-		userSignedTxn2,
-		userSignedTxn3,
-		// userSignedTxn4,
-	]
+// 	console.log(`[+] Publishing signed transactions`)
+// 	await algodClient.sendRawTransaction(signedTxns).do()
+// 	await algosdk.waitForConfirmation(
+// 		algodClient,
+// 		user_aXferTxn.txID().toString(),
+// 		4
+// 	)
+// 	console.log(`[+] The transaction should be signed by now`)
+// })().catch((e) => {
+// 	console.log(e)
+// })
 
-	console.log(`[+] Publishing signed transactions`)
-	await algodClient.sendRawTransaction(signedTxns).do()
-	await algosdk.waitForConfirmation(
-		algodClient,
-		user_aXferTxn.txID().toString(),
-		4
-	)
-	console.log(`[+] The transaction should be signed by now`)
-})().catch((e) => {
-	console.log(e)
-})
+// Attempt at OptIn
+// ;(async () => {
+// 	const suggestedParams = await algodClient.getTransactionParams().do()
+// 	const argName = makeSignatureChecker('_reachp_1((uint64))void').ui8
+
+// 	console.log(`[+] Creating Main contract OptIn call`)
+// 	const user_OptInTxn = algosdk.makeApplicationOptInTxnFromObject({
+// 		appIndex: mContract,
+// 		appArgs: [argName, algosdk.encodeUint64(mContract)],
+// 		foreignApps: [sContract],
+// 		foreignAssets: [TRUST],
+// 		boxes: [
+// 			{
+// 				appIndex: mContract,
+// 				name: buf_to_arr(
+// 					hex_to_buf(
+// 						'0x00'.concat(
+// 							Buffer.from(algosdk.decodeAddress(user.addr).publicKey).toString(
+// 								'hex'
+// 							)
+// 						)
+// 					)
+// 				),
+// 			},
+// 		],
+// 		from: user.addr,
+// 		note: enc.encode('Main contract OptIn call'),
+// 		suggestedParams,
+// 	})
+
+// 	const signedTxn = user_OptInTxn.signTxn(user.sk)
+
+// 	console.log(`[+] Publishing signed transaction`)
+// 	await algodClient.sendRawTransaction(signedTxn).do()
+// 	await algosdk.waitForConfirmation(algodClient, signedTxn.txID().toString(), 4)
+// 	console.log(`[+] The transaction should be signed by now`)
+// })()
 
 // Box name retrieval
 // ;(async () => {
@@ -531,3 +525,5 @@ const makeSignatureChecker = function (sig_) {
 // 		(algosdk.decodeAddress(user.addr)).publicKey
 // 	).toString('base64')
 // )
+
+// console.log(Buffer.from('10db3288', 'hex').toString('base64'))
